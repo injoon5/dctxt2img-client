@@ -1,0 +1,180 @@
+<head><link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet"></head>
+
+<!-- Code on GiHub: https://github.com/vitalikda/form-floating-labels-tailwindcss -->
+<style>
+  .-z-1 {
+    z-index: -1;
+  }
+
+  .origin-0 {
+    transform-origin: 0%;
+  }
+
+  input:focus ~ label,
+  input:not(:placeholder-shown) ~ label,
+  textarea:focus ~ label,
+  textarea:not(:placeholder-shown) ~ label,
+  select:focus ~ label,
+  select:not([value='']):valid ~ label {
+    /* @apply transform; scale-75; -translate-y-6; */
+    --tw-translate-x: 0;
+    --tw-translate-y: 0;
+    --tw-rotate: 0;
+    --tw-skew-x: 0;
+    --tw-skew-y: 0;
+    transform: translateX(var(--tw-translate-x)) translateY(var(--tw-translate-y)) rotate(var(--tw-rotate))
+      skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+    --tw-scale-x: 0.75;
+    --tw-scale-y: 0.75;
+    --tw-translate-y: -1.5rem;
+  }
+
+  input:focus ~ label,
+  select:focus ~ label {
+    /* @apply text-black; left-0; */
+    --tw-text-opacity: 1;
+    color: rgba(0, 0, 0, var(--tw-text-opacity));
+    left: 0px;
+  }
+      #toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    padding: 15px 20px;
+    transform: translate(-50%, 10px);
+    border-radius: 30px;
+    overflow: hidden;
+    font-size: .8rem;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .5s, visibility .5s, transform .5s;
+    background: rgba(0, 0, 0, .35);
+    color: #fff;
+    z-index: 10000;
+    }
+
+#toast.reveal {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, 0)
+    }
+</style>
+<div id="toast"></div>
+<div class="min-h-screen bg-gray-100 p-0 sm:p-12">
+  <div class="flex justify-center">
+  <div class="mx-auto max-w-md px-6 py-12 bg-white border-0 shadow-lg rounded-3xl">
+    <h1 class="text-2xl font-bold mb-8 px-12">Discord txt to img</h1>
+    <form id="form" novalidate>
+      <div class="relative z-0 w-full mb-5">
+        <input
+          id="text"
+          type="text"
+          name="text"
+          placeholder=" "
+          value="Change me!"
+          required
+          class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 border-gray-200 hello"
+        />
+        <label for="name" class="absolute duration-300 top-3 -z-1 origin-0 text-gray-500">Enter Text</label>
+      </div>
+
+      <div class="relative z-0 w-full mb-5">
+        <select
+          name="select"
+          id="color"
+          value=""
+          onclick="this.setAttribute('value', this.value);"
+          class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none z-1 focus:outline-none focus:ring-0 focus:border-blue-600 border-gray-200"
+        >
+          <option value="" selected disabled hidden></option>
+          <option value="original" selected>기본</option>
+          <option value="red">빨강</option>
+          <option value="green">초록</option>
+          <option value="yellow">노랑</option>
+          <option value="blue">파랑</option>
+          <option value="pink">분홍</option>
+          <option value="grey">회색</option>
+          <option value="white">흰색</option>
+          <option value="black">검정</option>
+          <option value="blurple">Blurple</option>
+          <option value="blurple_old">Old Blurple</option>
+        </select>
+        <label for="select" class="absolute duration-300 top-3 -z-1 origin-0 text-gray-500">Select the color of the text</label>
+      </div>
+
+      <div class="relative z-0 w-full mb-5">
+        <select
+          id = "font"
+          name="select"
+          value=""
+          onclick="this.setAttribute('value', this.value);"
+          class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none z-1 focus:outline-none focus:ring-0 focus:border-blue-600 border-gray-200"
+        >
+          <option value="" selected disabled hidden></option>
+          <option value="nanum" selected>나눔고딕</option>
+          <option value="lotte">롯데마트 드림</option>
+          <option value="gungseo">궁서체</option>
+          <option value="plexsans">IBM Plex Sans</option>
+          <option value="gugi">Gugi</option>
+          <option value="noto">Noto Sans</option>
+          <option value="hannuri">한글누리체</option>
+          <option value="krfr-type">한불 정부표준 타자기체</option>
+          <option value="seoulnamsan">서울남산체</option>
+          <option value="slei">꺾깎체</option>
+          <option value="spoqa">스포카 한 산스 네오</option>
+          
+        </select>
+        <label for="select" class="absolute duration-300 top-3 -z-1 origin-0 text-gray-500">Select the font of the text</label>
+      </div>
+      
+      <button
+        id="button"
+        type="button"
+        class="w-full px-6 py-3 mt-3 text-lg text-white transition-all duration-150 ease-linear rounded-lg shadow outline-none bg-blue-500 hover:bg-blue-600 hover:shadow-lg focus:outline-none "
+      >
+        Copy Link
+      </button>
+    </form>
+    <div class="relative z-0 w-full mt-5 pt-3">
+    <img class="Preview" id="previewimg"
+     src="https://pil-discord-txt.injoon5.repl.co/?"
+     alt="Preview Image">
+    </div>
+  </div>
+</div>
+</div>
+
+<script>
+function toast(string) {
+    const toast = document.getElementById("toast");
+
+    toast.classList.contains("reveal") ?
+        (clearTimeout(removeToast), removeToast = setTimeout(function () {
+            document.getElementById("toast").classList.remove("reveal")
+        }, 1000)) :
+        removeToast = setTimeout(function () {
+            document.getElementById("toast").classList.remove("reveal")
+        }, 1000)
+    toast.classList.add("reveal"),
+        toast.innerText = string
+    }  
+function copy(val) {
+  const t = document.createElement("textarea");
+  document.body.appendChild(t);
+  t.value = val;
+  t.select();
+  t.setSelectionRange(0, 99999);
+  document.execCommand('copy');
+  document.body.removeChild(t);
+  toast("복사 되었습니다!")
+}
+setInterval(function(){ textVal=document.getElementById("text").value; colorVal=document.getElementById("font").value; fontVal=document.getElementById("color").value; document.getElementById("previewimg").src = "https://pil-discord-txt.injoon5.repl.co/"+encodeURIComponent(textVal)+"?font="+colorVal+"&color="+fontVal; }, 3000);
+
+document.getElementById('button').addEventListener('click',()=>{
+    textVal=document.getElementById("text").value
+    colorVal=document.getElementById("font").value
+    fontVal=document.getElementById("color").value
+    alert('hello!');
+    copy("https://pil-discord-txt.injoon5.repl.co/"+encodeURIComponent(textVal)+"?font="+colorVal+"&color="+fontVal)
+},false);
+</script>
